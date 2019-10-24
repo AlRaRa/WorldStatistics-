@@ -19,9 +19,9 @@ class CrearTablas
     public function Crear(){
 
         foreach ($this->Countries as $localizacion){
-           //this->borrarDB($pais);
+      
             $this->crearTabla($localizacion);
-           //this->crearDatos($pais);
+          
         }
 
     }
