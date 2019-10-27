@@ -5,9 +5,9 @@ namespace DBControlador;
 class CrearTablas
 {
 
-    public function __construct()
+    public function __construct($oConexion)
     {
-        $this->oConexion = new oConexion("localhost", "COUNTRIESDATA", "root", "");
+        $this->oConexion = $oConexion;
         $this->oConexion->abrir();
         $this->oConni = $this->oConexion->obtenerConexion();
 

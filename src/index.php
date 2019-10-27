@@ -13,5 +13,5 @@ spl_autoload_register(function($className){
 });
 
 
-$oConexion = new oConexion();
+$oConexion = new oConexion("localhost", "COUNTRIESDATA", "root", "");
 $crearTabla = new CrearTablas($oConexion);
