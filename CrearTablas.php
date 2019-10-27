@@ -11,32 +11,34 @@ class CrearTablas
         $this->oConexion->abrir();
         $this->oConni = $this->oConexion->obtenerConexion();
 
-       $this->Countries=["SPAIN", "ITALY", "EUROPE", "WORLD", "NEWZELAND", "FRANCE", "USA", "AUSTRALIA", "CHILE", "CHINA"];
+        $this->Countries = ["SPAIN", "ITALY", "EUROPE", "WORLD", "NEWZELAND", "FRANCE", "USA", "AUSTRALIA", "CHILE", "CHINA"];
 
-       $this->Crear();
+        $this->Crear();
     }
 
-    public function Crear(){
+    public function Crear()
+    {
 
-        foreach ($this->Countries as $localizacion){
-           //this->borrarDB($pais);
+        foreach ($this->Countries as $localizacion) {
+
             $this->crearTabla($localizacion);
-           //this->crearDatos($pais);
+
         }
 
     }
 
-    private function borrarDB($country){
+    private function borrarDB($country)
+    {
 
         $this->oConni->query("DROP DATABASE IF EXISTS ${country}");
 
     }
 
 
+    private function crearTabla($localizacion)
+    {
 
-    private function crearTabla($localizacion){
-
-        $crearTabla="
+        $crearTabla = "
         CREATE TABLE IF NOT EXISTS `$localizacion` (
     Country_Name varchar (20) NOT NULL,
             Country_Code varchar (5) NOT NULL, 
@@ -66,7 +68,6 @@ class CrearTablas
             Year_2018 float  NOT NULL )ENGINE=InnoDB DEFAULT CHARSET=utf8 ";
 
 
-
         if ($this->oConni->query($crearTabla) === TRUE) {
             echo "Table MyGuests created successfully";
             $this->crearDatos($localizacion);
@@ -76,7 +77,7 @@ class CrearTablas
     }
 
 
-        public function crearDatos($localizacion)
+    public function crearDatos($localizacion)
     {
 
         $consult = "LOAD DATA LOCAL INFILE '/var/www/html/dwes/WorldStatistics/datas/$localizacion.csv' INTO TABLE $localizacion
@@ -86,9 +87,6 @@ class CrearTablas
                     (Country_Name, Country_Code, Indicator_Name, Indicator_Code, Year_1997, Year_1998, Year_1999, Year_2000,
                     Year_2001,Year_2002,Year_2003,Year_2004,Year_2005,Year_2006, Year_2007, Year_2008 , Year_2009 , Year_2010,
                     Year_2011, Year_2012,Year_2013,Year_2012,Year_2013,Year_2014,Year_2015,Year_2016,Year_2017,Year_2018)";
-
-
-
 
 
         if ($this->oConni->query($consult) === TRUE) {
