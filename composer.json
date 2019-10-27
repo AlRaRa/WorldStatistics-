@@ -1,0 +1,15 @@
+{
+    "name": "rafa/world-statistics",
+    "authors": [
+        {
+            "name": "Rafa",
+            "email": "wirecobweb@gmail.com"
+        }
+    ],
+    "require": {},
+  "autoload": {
+    "psr-4": {
+      "DBControlador\\": "src/"
+    }
+  }
+}

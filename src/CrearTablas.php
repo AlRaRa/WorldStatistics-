@@ -1,8 +1,7 @@
 <?php
-require_once 'oConexion.class.php';
-require_once 'config.php';
 
 
+namespace DBControlador;
 class CrearTablas
 {
 

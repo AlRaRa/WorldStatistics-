@@ -1,7 +1,7 @@
 <?php
 
 
-namespace controladorSQL;
+namespace DBControlador;
 class InfoLog
 {
 

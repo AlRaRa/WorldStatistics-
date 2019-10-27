@@ -1,5 +1,6 @@
 <?php
 
+namespace DBControlador;
 class oConexion {
 
     private $servidor;
