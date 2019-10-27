@@ -2,6 +2,7 @@
 require_once 'oConexion.class.php';
 require_once 'config.php';
 
+
 class CrearTablas
 {
 
@@ -16,7 +17,7 @@ class CrearTablas
         $this->Crear();
     }
 
-    public function Crear()
+    public function Crear($crearDatos)
     {
 
         foreach ($this->Countries as $localizacion) {
@@ -26,6 +27,7 @@ class CrearTablas
         }
 
     }
+
 
     private function borrarDB($country)
     {
@@ -39,6 +41,7 @@ class CrearTablas
     {
 
         $crearTabla = "
+        
         CREATE TABLE IF NOT EXISTS `$localizacion` (
     Country_Name varchar (20) NOT NULL,
             Country_Code varchar (5) NOT NULL, 
@@ -68,16 +71,16 @@ class CrearTablas
             Year_2018 float  NOT NULL )ENGINE=InnoDB DEFAULT CHARSET=utf8 ";
 
 
-        if ($this->oConni->query($crearTabla) === TRUE) {
-            echo "Table MyGuests created successfully";
-            $this->crearDatos($localizacion);
-        } else {
-            echo "Error creating table: " . $this->oConni->error;
-        }
+         ($this->oConni->query($crearTabla)) ?
+
+            [InfoLog::tablaCreada($localizacion), $this->crearDatos($localizacion)] :
+
+            InfoLog::errorCrearTabla($localizacion, $this->oConni->error);
+
     }
 
 
-    public function crearDatos($localizacion)
+    private function crearDatos($localizacion)
     {
 
         $consult = "LOAD DATA LOCAL INFILE '/var/www/html/dwes/WorldStatistics/datas/$localizacion.csv' INTO TABLE $localizacion
@@ -89,11 +92,10 @@ class CrearTablas
                     Year_2011, Year_2012,Year_2013,Year_2012,Year_2013,Year_2014,Year_2015,Year_2016,Year_2017,Year_2018)";
 
 
-        if ($this->oConni->query($consult) === TRUE) {
-            echo "Datos introducidos";
-        } else {
-            echo "Error introduciendo los datos: " . $this->oConni->error;
-        }
+        $this->oConni->query($consult) ?
+                InfoLog::datosIntroducidos($localizacion) :
+                    InfoLog::errorImportarDatos($localizacion, $this->oConni->error);
+
 
     }
 
